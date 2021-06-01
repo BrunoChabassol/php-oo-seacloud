@@ -3,19 +3,19 @@
 
 /** @var PDO $connection */
 
-//use Repository\DataCenterRepository;
-//use Repository\DistributionRepository;
-//use Repository\ServerRepository;
-//use Repository\UserRepository;
+use Repository\DataCenterRepository;
+use Repository\DistributionRepository;
+use Repository\ServerRepository;
+use Repository\UserRepository;
 
-//$datacenterRepository = new DataCenterRepository($connection);
-//$distributionRepository = new DistributionRepository($connection);
-//$serverRepository = new ServerRepository($connection);
-//$userRepository = new UserRepository($connection);
+$datacenterRepository = new DataCenterRepository($connection);
+$distributionRepository = new DistributionRepository($connection);
+$serverRepository = new ServerRepository($connection);
+$userRepository = new UserRepository($connection);
 
-//$repository = new ServerRepository($connection);
+$repository = new ServerRepository($connection);
 
-//$servers = $repository->findAll();
+$servers = $repository->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +49,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2>Create server</h2>
                 <ol>
-                    <li><a href="index.php">Home</a></li>
+                    <li><a href="/index.php">Home</a></li>
                     <li>Create server</li>
                 </ol>
             </div>
@@ -65,10 +65,10 @@
 
                 <div class="col-md-4 col-lg-3">
                     <div class="list-group pe-5">
-                        <a href="account_dashboard.php" class="list-group-item list-group-item-action">
+                        <a href="/account_dashboard.php" class="list-group-item list-group-item-action">
                             Dashboard
                         </a>
-                        <a href="account_profil.php" class="list-group-item list-group-item-action">
+                        <a href="/account_profil.php" class="list-group-item list-group-item-action">
                             My profil
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">

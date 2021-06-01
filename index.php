@@ -3,19 +3,19 @@
 
 /** @var PDO $connection */
 
-//use Repository\DataCenterRepository;
-//use Repository\DistributionRepository;
-//use Repository\ServerRepository;
-//use Repository\UserRepository;
+use Repository\DataCenterRepository;
+use Repository\DistributionRepository;
+use Repository\ServerRepository;
+use Repository\UserRepository;
 
-//$datacenterRepository = new DataCenterRepository($connection);
-//$distributionRepository = new DistributionRepository($connection);
-//$serverRepository = new ServerRepository($connection);
-//$userRepository = new UserRepository($connection);
+$datacenterRepository = new DataCenterRepository($connection);
+$distributionRepository = new DistributionRepository($connection);
+$serverRepository = new ServerRepository($connection);
+$userRepository = new UserRepository($connection);
 
-//$repository = new ServerRepository($connection);
+$repository = new ServerRepository($connection);
 
-//$servers = $repository->findAll();
+$servers = $repository->findAll();
 ?>
 
 <!DOCTYPE html>

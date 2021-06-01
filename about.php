@@ -3,19 +3,19 @@
 
 /** @var PDO $connection */
 
-//use Repository\DataCenterRepository;
-//use Repository\DistributionRepository;
-//use Repository\ServerRepository;
-//use Repository\UserRepository;
+use Repository\DataCenterRepository;
+use Repository\DistributionRepository;
+use Repository\ServerRepository;
+use Repository\UserRepository;
 
-//$datacenterRepository = new DataCenterRepository($connection);
-//$distributionRepository = new DistributionRepository($connection);
-//$serverRepository = new ServerRepository($connection);
-//$userRepository = new UserRepository($connection);
+$datacenterRepository = new DataCenterRepository($connection);
+$distributionRepository = new DistributionRepository($connection);
+$serverRepository = new ServerRepository($connection);
+$userRepository = new UserRepository($connection);
 
-//$repository = new ServerRepository($connection);
+$repository = new ServerRepository($connection);
 
-//$servers = $repository->findAll();
+$servers = $repository->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -204,7 +204,7 @@
                 <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
                     <div class="member" data-aos="fade-up" data-aos-delay="300">
                         <div class="member-img">
-                            <img src="img/team/team-3.jpg" class="img-fluid" alt="">
+                            <img src="/img/team/team-3.jpg" class="img-fluid" alt="">
                             <div class="social">
                                 <a href=""><i class="bi bi-twitter"></i></a>
                                 <a href=""><i class="bi bi-facebook"></i></a>
@@ -222,7 +222,7 @@
                 <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
                     <div class="member" data-aos="fade-up" data-aos-delay="400">
                         <div class="member-img">
-                            <img src="img/team/team-4.jpg" class="img-fluid" alt="">
+                            <img src="/img/team/team-4.jpg" class="img-fluid" alt="">
                             <div class="social">
                                 <a href=""><i class="bi bi-twitter"></i></a>
                                 <a href=""><i class="bi bi-facebook"></i></a>

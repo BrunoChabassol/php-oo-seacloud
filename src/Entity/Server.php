@@ -7,6 +7,9 @@ namespace Entity;
 class Server
 {
     private $id   = null;
+    private $user   = null;
+    private $location   = null;
+    private $distribution   = null;
     private $name = null;
     private $state = null;
     private $cpu = null;
@@ -20,6 +23,42 @@ class Server
     public function setId(?int $id): Server
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getLocation(): DataCenter
+    {
+        return $this->location;
+    }
+
+    public function setLocation(DataCenter $location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getDistribution(): Distribution
+    {
+        return $this->distribution;
+    }
+
+    public function setDistribution(Distribution $distribution)
+    {
+        $this->dustribution = $distribution;
 
         return $this;
     }

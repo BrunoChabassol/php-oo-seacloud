@@ -3,19 +3,19 @@
 
 /** @var PDO $connection */
 
-//use Repository\DataCenterRepository;
-//use Repository\DistributionRepository;
-//use Repository\ServerRepository;
-//use Repository\UserRepository;
+use Repository\DataCenterRepository;
+use Repository\DistributionRepository;
+use Repository\ServerRepository;
+use Repository\UserRepository;
 
-//$datacenterRepository = new DataCenterRepository($connection);
-//$distributionRepository = new DistributionRepository($connection);
-//$serverRepository = new ServerRepository($connection);
-//$userRepository = new UserRepository($connection);
+$datacenterRepository = new DataCenterRepository($connection);
+$distributionRepository = new DistributionRepository($connection);
+$serverRepository = new ServerRepository($connection);
+$userRepository = new UserRepository($connection);
 
-//$repository = new ServerRepository($connection);
+$repository = new ServerRepository($connection);
 
-//$servers = $repository->findAll();
+$servers = $repository->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +49,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2>Dashboard</h2>
                 <ol>
-                    <li><a href="index.php">Home</a></li>
+                    <li><a href="/index.php">Home</a></li>
                     <li>Dashboard</li>
                 </ol>
             </div>
@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="col-md-8 col-lg-9">
-                    <a href="account_new-server.php" class="btn btn-primary float-end">
+                    <a href="/account_new-server.php" class="btn btn-primary float-end">
                         New server
                     </a>
 
