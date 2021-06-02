@@ -71,22 +71,22 @@ $servers = $repository->findAll();
                     Sign in to your account and start working with your servers.
                 </p>
 
-                <form>
+                <form method="post">
                     <div class="mb-3">
                         <label for="login-email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="login-email" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="login-email" name="login-email" placeholder="name@example.com">
                     </div>
 
                     <div class="mb-3">
                         <label for="login-password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="login-password" placeholder="" value="" required="">
+                        <input type="password" class="form-control" id="login-password" name="login-password" placeholder="" value="" required="">
                         <div class="invalid-feedback">
                             Please enter your password.
                         </div>
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+                        <button type="submit" name="_create" class="btn btn-primary btn-lg">Sign in</button>
                     </div>
                 </form>
             </div>

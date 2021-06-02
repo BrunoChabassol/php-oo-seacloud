@@ -7,6 +7,8 @@ use Repository\DataCenterRepository;
 use Repository\DistributionRepository;
 use Repository\ServerRepository;
 use Repository\UserRepository;
+use Entity\Server;
+use Manager\ServerManager;
 
 $datacenterRepository = new DataCenterRepository($connection);
 $distributionRepository = new DistributionRepository($connection);
@@ -16,6 +18,33 @@ $userRepository = new UserRepository($connection);
 $repository = new ServerRepository($connection);
 
 $servers = $repository->findAll();
+$datacenters = $datacenterRepository ->findAll();
+$distributions = $distributionRepository ->findAll();
+
+$server = new Server();
+
+// Si le formulaire a été soumis
+if (isset($_POST['server_create'])) {  //attribut name du bouton submit
+    // Met à jour le nouvel Serveur avec les données saisies par l'internaute
+
+    $server
+        ->setlocation($_POST['location'])
+        ->setdistribution($_POST['distribution'])
+        ->setName($_POST['name'])
+        ->setState($_POST['state'])
+        ->setCpu($_POST['cpu'])
+        ->setRam($_POST['ram']);
+
+    // Insérer dans la base de données
+    $manager = new ServerManager($connection);
+    $manager->insert($server);
+
+    // Rediriger l'internaute
+    header('Location: /server/read.php?id=' . $server->getId());
+    http_response_code(302);
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -80,18 +109,22 @@ $servers = $repository->findAll();
                 <div class="col-md-8 col-lg-9">
                     <h2 class="mb-5">Create your new server</h2>
 
-                    <form>
+                    <form method="post">
                         <div class="mb-4">
                             <label for="new-server-name" class="form-label">Server name</label>
-                            <input type="email" class="form-control" id="new-server-name">
+                            <input type="text" class="form-control" id="new-server-name" name="new-server-name">
                             <div id="new-server-name-help" class="form-text">Leave blank for auto generation.</div>
                         </div>
 
                         <div class="mb-4">
                             <label for="new-server-datacenter" class="form-label">Datacenter</label>
-                            <select class="form-select" id="new-server-datacenter">
-                                <option selected>Choose your server location</option>
-                                <option value="1">New York</option>
+                            <select class="form-select" id="new-server-datacenter" name="new-server-datacenter">
+                                <option selected>Choose your server location </option>
+
+                                <?php foreach ($datacenters as $datacenter) { ?>
+                                    <option value="<?php echo $datacenter->getId(); ?>"><?php echo $datacenter->getName(); ?></option>
+                                <?php } ?>
+<!--                            <option value="1">New York</option>
                                 <option value="2">San Francisco</option>
                                 <option value="3">Amsterdam</option>
                                 <option value="4">Singapore</option>
@@ -99,35 +132,40 @@ $servers = $repository->findAll();
                                 <option value="6">Frankfurt</option>
                                 <option value="7">Toronto</option>
                                 <option value="8">Bangalore</option>
-                            </select>
+-->                             </select>
                         </div>
 
                         <div class="mb-4">
                             <label for="new-server-distribution" class="form-label">Distribution</label>
-                            <select class="form-select" id="new-server-distribution">
-                                <option selected>Choose your server distribution</option>
-                                <option value="1">Ubuntu 20.04 (LTS) x64</option>
+                            <select class="form-select" id="new-server-distribution" name="new-server-distribution">
+                                <option selected>Choose your server distribution </option>
+
+                                <?php foreach ($distributions as $distribution) { ?>
+                                    <option value="<?php echo $distribution->getId(); ?>"><?php echo $distribution->getName(); ?></option>
+                                <?php } ?>
+
+<!--                            <option value="1">Ubuntu 20.04 (LTS) x64</option>
                                 <option value="2">FreeBSD 12.2 x64</option>
                                 <option value="3">Fedora 34 x64</option>
                                 <option value="4">Debian 10 x64</option>
                                 <option value="5">CentOS 8.3 x64</option>
-                            </select>
+-->                             </select>
                         </div>
 
                         <div class="mb-4 slider">
                             <span class="badge badge bg-primary float-end"><span>1</span> Intel CPU</span>
                             <label for="new-server-cpu" class="form-label">CPU</label>
-                            <input type="range" class="form-range" min="1" max="16" value="1" id="new-server-cpu">
+                            <input type="range" class="form-range" min="1" max="16" value="1" id="new-server-cpu" name="new-server-cpu">
                         </div>
 
                         <div class="mb-4 slider">
                             <span class="badge badge bg-primary float-end"><span>1</span> GB RAM</span>
                             <label for="new-server-ram" class="form-label">RAM</label>
-                            <input type="range" class="form-range" min="1" max="16"  value="1" id="new-server-ram">
+                            <input type="range" class="form-range" min="1" max="16"  value="1" id="new-server-ram" name="new-server-ram">
                         </div>
 
                         <div>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" name="server_create" class="btn btn-primary">Create</button>
                         </div>
 
                     </form>

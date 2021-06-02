@@ -21,7 +21,7 @@ class ServerRepository
      */
     public function findAll(): array
     {
-        $sql = 'SELECT id, STATE_PENDING, STATE_STOPED, STATE_READY, user, location, distribution, name, state, cpu, ram FROM server';
+        $sql = 'SELECT id, user, location, distribution, name, state, cpu, ram FROM server';
 
         $statement = $this->connection->query($sql);
 
@@ -36,7 +36,7 @@ class ServerRepository
 
     public function findOneById(int $id): ?Server
     {
-        $sql = 'SELECT id, STATE_PENDING, STATE_STOPED, STATE_READY, user, location, distribution, name, state, cpu, ram FROM server WHERE id=:id LIMIT 1';
+        $sql = 'SELECT id, user, location, distribution, name, state, cpu, ram FROM server WHERE id=:id LIMIT 1';
 
         $statement = $this->connection->prepare($sql);
 
@@ -56,7 +56,7 @@ class ServerRepository
         $server = new Server();
         $server
             ->setId($data['id'])
-            ->setUser($data['user'])
+ //           ->setUser($data['user'])
             ->setlocation($data['location'])
             ->setdistribution($data['distribution'])
             ->setName($data['name'])

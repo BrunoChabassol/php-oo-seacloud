@@ -16,6 +16,8 @@ $userRepository = new UserRepository($connection);
 $repository = new ServerRepository($connection);
 
 $servers = $repository->findAll();
+
+$etat = 0 ;
 ?>
 
 <!DOCTYPE html>
@@ -84,18 +86,33 @@ $servers = $repository->findAll();
 
                     <h2 class="mb-3">Servers</h2>
 
+
+                    <?php foreach ($servers as $server) { ?>
+
                     <div class="card mb-3">
                         <div class="row g-0">
+
                             <div class="col-md-3">
                                 <div class="card-body">
-                                    <h4 class="mb-3">SC-NY-Ubuntu-01</h4>
+                                    <h4 class="mb-3"><?php echo $server->getName(); ?></h4>
                                     <p>
                                         <strong>IP</strong>
                                         <span class="text-muted">255.255.255.255</span>
                                     </p>
                                     <p>
                                         <strong>Status</strong>
-                                        <span class="badge bg-success">Ready</span>
+                                            <?php
+                                            $etat = $server->getState() ;
+                                                switch ( $etat ) {
+                                                    case 0 :
+                                                    echo '<span class="badge bg-warning">Pending</span>' ;
+                                                    break ;
+                                                    case 1 :
+                                                    echo '<span class="badge bg-danger">Stopped</span>' ;
+                                                    break ;
+                                                    default :
+                                                    echo '<span class="badge bg-success">Ready</span>';
+                                                } ?>
                                     </p>
                                 </div>
                             </div>
@@ -103,16 +120,16 @@ $servers = $repository->findAll();
                                 <div class="card-body">
                                     <dl class="row mb-0">
                                         <dt class="col-sm-5">Datacenter</dt>
-                                        <dd class="col-sm-7">New York</dd>
+                                        <dd class="col-sm-7"><?php echo $server->getLocation(); ?></dd>
 
                                         <dt class="col-sm-5">Distribution</dt>
-                                        <dd class="col-sm-7">Ubuntu 20.04 (LTS) x64</dd>
+                                        <dd class="col-sm-7"><?php echo $server->getDistribution(); ?></dd>
 
                                         <dt class="col-sm-5">CPU</dt>
-                                        <dd class="col-sm-7">2 Intel CPUs</dd>
+                                        <dd class="col-sm-7"><?php echo $server->getCpu(); ?> Intel CPUs</dd>
 
                                         <dt class="col-sm-5">RAM</dt>
-                                        <dd class="col-sm-7">4 GB</dd>
+                                        <dd class="col-sm-7"><?php echo $server->getRam(); ?> GB</dd>
                                     </dl>
                                 </div>
                             </div>
@@ -129,52 +146,8 @@ $servers = $repository->findAll();
                             </div>
                         </div>
                     </div>
+                            <?php } ?>
 
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-3">
-                                <div class="card-body">
-                                    <h4 class="mb-3">SC-AM-Debian-01</h4>
-                                    <p>
-                                        <strong>IP</strong>
-                                        <span class="text-muted">128.128.128.128</span>
-                                    </p>
-                                    <p>
-                                        <strong>Status</strong>
-                                        <span class="badge bg-warning">Pending</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 border-start">
-                                <div class="card-body">
-                                    <dl class="row mb-0">
-                                        <dt class="col-sm-5">Datacenter</dt>
-                                        <dd class="col-sm-7">Amsterdam</dd>
-
-                                        <dt class="col-sm-5">Distribution</dt>
-                                        <dd class="col-sm-7">Debian 10 x64</dd>
-
-                                        <dt class="col-sm-5">CPU</dt>
-                                        <dd class="col-sm-7">1 Intel CPU</dd>
-
-                                        <dt class="col-sm-5">RAM</dt>
-                                        <dd class="col-sm-7">2 GB</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div class="col-md-3 border-start">
-                                <div class="card-body">
-                                    <a class="btn btn-primary mb-3" href="#">
-                                        Restart
-                                    </a>
-                                    <br>
-                                    <a class="btn btn-light" href="#">
-                                        Reset
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

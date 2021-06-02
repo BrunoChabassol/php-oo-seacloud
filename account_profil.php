@@ -80,16 +80,16 @@ $servers = $repository->findAll();
                 <div class="col-md-8 col-lg-9">
                     <h2 class="mb-5">My profil</h2>
 
-                    <form>
+                    <form method="post">
                         <div class="mb-4">
                             <label for="profil-email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="profil-email" placeholder="email@example.com" readonly>
+                            <input type="email" class="form-control" id="profil-email" name="profil-email" placeholder="email@example.com" readonly>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="signup-password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="signup-password" placeholder="" value="" required="">
+                                <input type="password" class="form-control" id="signup-password" name="signup-password" placeholder="" value="" required="">
                                 <div class="invalid-feedback">
                                     Please enter your password.
                                 </div>
@@ -97,7 +97,7 @@ $servers = $repository->findAll();
 
                             <div class="col">
                                 <label for="signup-confirmation" class="form-label">Confirmation</label>
-                                <input type="password" class="form-control" id="signup-confirmation" placeholder="" value="" required="">
+                                <input type="password" class="form-control" id="signup-confirmation" name="signup-confirmation" placeholder="" value="" required="">
                                 <div class="invalid-feedback">
                                     Please enter your password confirmation.
                                 </div>

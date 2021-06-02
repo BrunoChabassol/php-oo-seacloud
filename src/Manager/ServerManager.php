@@ -19,16 +19,13 @@ class ServerManager {
      */
     public function insert(Server $server) {
         //Use connection to insert
-        $sql = 'INSERT INTO server(STATE_PENDING, STATE_STOPED, STATE_READY, user, location, distribution, name, state, cpu, ram) VALUES (:STATE_PENDING, :STATE_STOPED, :STATE_READY, :user, :location, :distribution, :name, :state, :cpu, :ram)';
+        $sql = 'INSERT INTO server( user, location, distribution, name, state, cpu, ram) VALUES ( :user, :location, :distribution, :name, :state, :cpu, :ram)';
 
         //Prepare
         $insert = $this->connection->prepare($sql);
 
         //Execute
         $insert->execute([
-            'STATE_PENDING' => $server->getSTATE_PENDING(),
-            'STATE_STOPED' => $server->getSTATE_STOPED(),
-            'STATE_READY' => $server->getSTATE_READY(),
             'user' => $server->getUser(),
             'location' => $server->getLocation(),
             'distribution' => $server->getDistribution(),
@@ -45,15 +42,12 @@ class ServerManager {
     }
 
     public function update(Server $server){
-        $sql = 'UPDATE server SET STATE_PENDING=:STATE_PENDING, STATE_STOPED=:STATE_STOPED, STATE_READY=:STATE_READY, user=:user_value, location=:location_value, distribution=:distribution_value, name=:name_value, state=:state_value, cpu=:cpu_value, ram=:ram_value WHERE id=:id LIMIT 1';
+        $sql = 'UPDATE server SET user=:user_value, location=:location_value, distribution=:distribution_value, name=:name_value, state=:state_value, cpu=:cpu_value, ram=:ram_value WHERE id=:id LIMIT 1';
 
         $update = $this->connection->prepare($sql);
 
         $update->execute([
             'id' => $server->getId(),
-            'STATE_PENDING' => $server->getSTATE_PENDING(),
-            'STATE_STOPED' => $server->getSTATE_STOPED(),
-            'STATE_READY' => $server->getSTATE_READY(),
             'user' => $server->getUser(),
             'location' => $server->getLocation(),
             'distribution' => $server->getDistribution(),

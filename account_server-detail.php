@@ -122,7 +122,7 @@ $servers = $repository->findAll();
                             <form class="row row-cols-lg-auto g-3 align-items-center" method="post">
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="delete-confirm" required>
+                                        <input class="form-check-input" type="checkbox" id="delete-confirm" name="delete-confirm" required>
                                         <label class="form-check-label" for="delete-confirm">
                                             Confirm server deletion
                                         </label>

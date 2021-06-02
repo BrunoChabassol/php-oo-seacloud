@@ -71,16 +71,16 @@ $servers = $repository->findAll();
                     Create your account and start working with your servers.
                 </p>
 
-                <form>
+                <form method="post">
                     <div class="mb-3">
                         <label for="signup-email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="signup-email" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="signup-email" name="signup-email" placeholder="name@example.com">
                     </div>
 
                     <div class="row mb-3">
                         <div class="col">
                             <label for="signup-password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="signup-password" placeholder="" value="" required="">
+                            <input type="password" class="form-control" id="signup-password" name="signup-password" placeholder="" value="" required="">
                             <div class="invalid-feedback">
                                 Please enter your password.
                             </div>
@@ -88,7 +88,7 @@ $servers = $repository->findAll();
 
                         <div class="col">
                             <label for="signup-confirmation" class="form-label">Confirmation</label>
-                            <input type="password" class="form-control" id="signup-confirmation" placeholder="" value="" required="">
+                            <input type="password" class="form-control" id="signup-confirmation" name="signup-confirmation" placeholder="" value="" required="">
                             <div class="invalid-feedback">
                                 Please enter your password confirmation.
                             </div>
@@ -96,7 +96,7 @@ $servers = $repository->findAll();
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-lg">Sign up</button>
+                        <button type="submit" name="user_create" class="btn btn-primary btn-lg">Sign up</button>
                     </div>
                 </form>
             </div>

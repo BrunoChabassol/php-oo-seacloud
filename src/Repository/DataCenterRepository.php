@@ -21,7 +21,7 @@ class DataCenterRepository
      */
     public function findAll(): array
     {
-        $sql = 'SELECT id, name, code FROM dataCenter';
+        $sql = "SELECT id, `name`, code FROM datacenter";
 
         $statement = $this->connection->query($sql);
 
@@ -36,7 +36,7 @@ class DataCenterRepository
 
     public function findOneById(int $id): ?DataCenter
     {
-        $sql = 'SELECT id, name, code FROM dataCenter WHERE id=:id LIMIT 1';
+        $sql = "SELECT id, `name`, code FROM datacenter WHERE id=:id LIMIT 1";
 
         $statement = $this->connection->prepare($sql);
 

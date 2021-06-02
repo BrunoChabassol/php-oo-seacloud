@@ -6,6 +6,9 @@ namespace Entity;
 
 class Server
 {
+    public const STATE_PENDING = 0 ;
+    public const STATE_STOPED = 1 ;
+    public const STATE_READY = 2 ;
     private $id   = null;
     private $user   = null;
     private $location   = null;
@@ -32,33 +35,33 @@ class Server
         return $this->user;
     }
 
-    public function setUser(User $user)
+    public function setUser(User $user) : Server
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getLocation(): DataCenter
+    public function getLocation(): string
     {
         return $this->location;
     }
 
-    public function setLocation(DataCenter $location)
+    public function setLocation(string $location) : Server
     {
         $this->location = $location;
 
         return $this;
     }
 
-    public function getDistribution(): Distribution
+    public function getDistribution(): string
     {
         return $this->distribution;
     }
 
-    public function setDistribution(Distribution $distribution)
+    public function setDistribution(string $distribution) : Server
     {
-        $this->dustribution = $distribution;
+        $this->distribution = $distribution;
 
         return $this;
     }
