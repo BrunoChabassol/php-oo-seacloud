@@ -19,14 +19,14 @@ class ServerManager {
      */
     public function insert(Server $server) {
         //Use connection to insert
-        $sql = 'INSERT INTO server( user, location, distribution, name, state, cpu, ram) VALUES ( :user, :location, :distribution, :name, :state, :cpu, :ram)';
+        $sql = 'INSERT INTO server( location, distribution, name, state, cpu, ram) VALUES ( :location, :distribution, :name, :state, :cpu, :ram)';
 
         //Prepare
         $insert = $this->connection->prepare($sql);
 
         //Execute
         $insert->execute([
-            'user' => $server->getUser(),
+//            'user' => $server->getUser(),
             'location' => $server->getLocation(),
             'distribution' => $server->getDistribution(),
             'name' => $server->getName(),

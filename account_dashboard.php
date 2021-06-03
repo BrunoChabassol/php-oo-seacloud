@@ -7,6 +7,7 @@ use Repository\DataCenterRepository;
 use Repository\DistributionRepository;
 use Repository\ServerRepository;
 use Repository\UserRepository;
+use Manager\ServerManager;
 
 $datacenterRepository = new DataCenterRepository($connection);
 $distributionRepository = new DistributionRepository($connection);
@@ -17,7 +18,34 @@ $repository = new ServerRepository($connection);
 
 $servers = $repository->findAll();
 
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+if (null === $server = $repository->findOneById($id)) {
+    http_response_code(404);
+    exit;
+}
+
 $etat = 0 ;
+
+$error = '';
+
+// Si le formulaire a été soumis et la case de confirmation est cochée
+if (isset($_POST['server_delete'])) {
+    if (isset($_POST['delete-confirm']) && ($_POST['delete-confirm'] === '1')) {
+        // Supprimer le serveur de la base de données
+        $manager = new ServerManager($connection);
+        $manager->delete($server);
+
+        // Rediriger l'internaute vers le tableau de bord
+        header('Location: /account_dashboard.php');
+        http_response_code(302);
+        exit;
+    }  else {
+        $error = 'Veuillez cocher la case.';
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +162,7 @@ $etat = 0 ;
                                 </div>
                             </div>
                             <div class="col-md-3 border-start">
-                                <div class="card-body">
+                <!--                <div class="card-body">
                                     <a class="btn btn-primary mb-3" href="#">
                                         Restart
                                     </a>
@@ -143,6 +171,33 @@ $etat = 0 ;
                                         Reset
                                     </a>
                                 </div>
+                -->
+                                <div class="card-body border-top">
+                                    <a class="btn btn-primary me-3" href="#">
+                                        Restart
+                                    </a>
+                                    <a class="btn btn-light" href="#">
+                                        Reset
+                                    </a>
+                                </div>
+                                <div class="card-body border-top">
+                                    <form class="row row-cols-lg-auto g-3 align-items-center" method="post">
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="delete-confirm" name="delete-confirm" value="1" required>
+                                                <label class="form-check-label" for="delete-confirm">
+                                                    Confirm server deletion
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" name="server_delete" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -14,9 +14,10 @@ class Server
     private $location   = null;
     private $distribution   = null;
     private $name = null;
-    private $state = null;
-    private $cpu = null;
-    private $ram = null;
+ //   private $state = self::STATE_PENDING;     // ce self n'est utilisable qu'à l'intérieur de ma classe (cf. this)
+    private $state = Server::STATE_PENDING;     //Utilisable partout, mais à condition de mettre un use pour pouvoir utiliser cette classe Server
+    private $cpu = 2;
+    private $ram = 6;
 
     public function getId(): ?int
     {
@@ -30,17 +31,17 @@ class Server
         return $this;
     }
 
-    public function getUser(): User
-    {
-        return $this->user;
-    }
+//    public function getUser(): User
+//    {
+//        return $this->user;
+//    }
 
-    public function setUser(User $user) : Server
-    {
-        $this->user = $user;
-
-        return $this;
-    }
+//    public function setUser(User $user) : Server
+//    {
+//        $this->user = $user;
+//
+//         return $this;
+//    }
 
     public function getLocation(): string
     {

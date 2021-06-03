@@ -7,6 +7,7 @@ use Repository\DataCenterRepository;
 use Repository\DistributionRepository;
 use Repository\ServerRepository;
 use Repository\UserRepository;
+use Manager\ServerManager;
 
 $datacenterRepository = new DataCenterRepository($connection);
 $distributionRepository = new DistributionRepository($connection);
@@ -16,6 +17,33 @@ $userRepository = new UserRepository($connection);
 $repository = new ServerRepository($connection);
 
 $servers = $repository->findAll();
+
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+if (null === $server = $repository->findOneById($id)) {
+    http_response_code(404);
+    exit;
+}
+$etat = 0 ;
+
+$error = '';
+
+// Si le formulaire a été soumis et la case de confirmation est cochée
+if (isset($_POST['server_delete'])) {
+    if (isset($_POST['delete-confirm']) && ($_POST['delete-confirm'] === '1')) {
+        // Supprimer le serveur de la base de données
+        $manager = new ServerManager($connection);
+        $manager->delete($server);
+
+        // Rediriger l'internaute vers le tableau de bord
+        header('Location: /account_dashboard.php');
+        http_response_code(302);
+        exit;
+    }
+
+    $error = 'Veuillez cocher la case.';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +111,7 @@ $servers = $repository->findAll();
 
                     <div class="card">
                         <div class="card-header">
-                            <h1 class="h4 my-2">SC-NY-Ubuntu-01</h1>
+                            <h1 class="h4 my-2"><?php echo $server->getName(); ?></h1>
                         </div>
                         <div class="card-body row">
                             <div class="col">
@@ -91,23 +119,36 @@ $servers = $repository->findAll();
                                 <span class="text-muted">255.255.255.255</span>
                             </div>
                             <div class="col">
-                                <strong>Status</strong>
-                                <span class="badge bg-success">Ready</span>
+                                <p>
+                                    <strong>Status</strong>
+                                    <?php
+                                    $etat = $server->getState() ;
+                                    switch ( $etat ) {
+                                        case 0 :
+                                            echo '<span class="badge bg-warning">Pending</span>' ;
+                                            break ;
+                                        case 1 :
+                                            echo '<span class="badge bg-danger">Stopped</span>' ;
+                                            break ;
+                                        default :
+                                            echo '<span class="badge bg-success">Ready</span>';
+                                    } ?>
+                                </p>
                             </div>
                         </div>
                         <div class="card-body border-top">
                             <dl class="row mb-0">
                                 <dt class="col-sm-5">Datacenter</dt>
-                                <dd class="col-sm-7">New York</dd>
+                                <dd class="col-sm-7"><?php echo $server->getLocation(); ?></dd>
 
                                 <dt class="col-sm-5">Distribution</dt>
-                                <dd class="col-sm-7">Ubuntu 20.04 (LTS) x64</dd>
+                                <dd class="col-sm-7"><?php echo $server->getDistribution(); ?></dd>
 
                                 <dt class="col-sm-5">CPU</dt>
-                                <dd class="col-sm-7">2 Intel CPUs</dd>
+                                <dd class="col-sm-7"><?php echo $server->getCpu() . " Intel CPUs"; ?></dd>
 
                                 <dt class="col-sm-5">RAM</dt>
-                                <dd class="col-sm-7">4 GB</dd>
+                                <dd class="col-sm-7"><?php echo $server->getRam() . " GB"; ?></dd>
                             </dl>
                         </div>
                         <div class="card-body border-top">
@@ -122,7 +163,7 @@ $servers = $repository->findAll();
                             <form class="row row-cols-lg-auto g-3 align-items-center" method="post">
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="delete-confirm" name="delete-confirm" required>
+                                        <input class="form-check-input" type="checkbox" id="delete-confirm" name="delete-confirm" value="1" required>
                                         <label class="form-check-label" for="delete-confirm">
                                             Confirm server deletion
                                         </label>
@@ -130,7 +171,7 @@ $servers = $repository->findAll();
                                 </div>
 
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" name="server_delete" class="btn btn-danger">Delete</button>
                                 </div>
                             </form>
 

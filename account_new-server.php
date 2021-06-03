@@ -31,7 +31,7 @@ if (isset($_POST['server_create'])) {  //attribut name du bouton submit
         ->setlocation($_POST['location'])
         ->setdistribution($_POST['distribution'])
         ->setName($_POST['name'])
-        ->setState($_POST['state'])
+    //    ->setState($_POST['state'])
         ->setCpu($_POST['cpu'])
         ->setRam($_POST['ram']);
 
@@ -40,7 +40,7 @@ if (isset($_POST['server_create'])) {  //attribut name du bouton submit
     $manager->insert($server);
 
     // Rediriger l'internaute
-    header('Location: /server/read.php?id=' . $server->getId());
+    header('Location: /account_server-detail.php?id=' . $server->getId());
     http_response_code(302);
     exit;
 }
@@ -112,17 +112,17 @@ if (isset($_POST['server_create'])) {  //attribut name du bouton submit
                     <form method="post">
                         <div class="mb-4">
                             <label for="new-server-name" class="form-label">Server name</label>
-                            <input type="text" class="form-control" id="new-server-name" name="new-server-name">
+                            <input type="text" class="form-control" id="new-server-name" name="name">
                             <div id="new-server-name-help" class="form-text">Leave blank for auto generation.</div>
                         </div>
 
                         <div class="mb-4">
                             <label for="new-server-datacenter" class="form-label">Datacenter</label>
-                            <select class="form-select" id="new-server-datacenter" name="new-server-datacenter">
+                            <select class="form-select" id="new-server-datacenter" name="location">
                                 <option selected>Choose your server location </option>
 
                                 <?php foreach ($datacenters as $datacenter) { ?>
-                                    <option value="<?php echo $datacenter->getId(); ?>"><?php echo $datacenter->getName(); ?></option>
+                                    <option value="<?php echo $datacenter->getName(); ?>"><?php echo $datacenter->getName(); ?></option>
                                 <?php } ?>
 <!--                            <option value="1">New York</option>
                                 <option value="2">San Francisco</option>
@@ -137,11 +137,11 @@ if (isset($_POST['server_create'])) {  //attribut name du bouton submit
 
                         <div class="mb-4">
                             <label for="new-server-distribution" class="form-label">Distribution</label>
-                            <select class="form-select" id="new-server-distribution" name="new-server-distribution">
+                            <select class="form-select" id="new-server-distribution" name="distribution">
                                 <option selected>Choose your server distribution </option>
 
                                 <?php foreach ($distributions as $distribution) { ?>
-                                    <option value="<?php echo $distribution->getId(); ?>"><?php echo $distribution->getName(); ?></option>
+                                    <option value="<?php echo $distribution->getName(); ?>"><?php echo $distribution->getName(); ?></option>
                                 <?php } ?>
 
 <!--                            <option value="1">Ubuntu 20.04 (LTS) x64</option>
@@ -155,13 +155,13 @@ if (isset($_POST['server_create'])) {  //attribut name du bouton submit
                         <div class="mb-4 slider">
                             <span class="badge badge bg-primary float-end"><span>1</span> Intel CPU</span>
                             <label for="new-server-cpu" class="form-label">CPU</label>
-                            <input type="range" class="form-range" min="1" max="16" value="1" id="new-server-cpu" name="new-server-cpu">
+                            <input type="range" class="form-range" min="1" max="16" value="<?php echo $server->getCpu(); ?>" id="new-server-cpu" name="cpu">
                         </div>
 
                         <div class="mb-4 slider">
                             <span class="badge badge bg-primary float-end"><span>1</span> GB RAM</span>
                             <label for="new-server-ram" class="form-label">RAM</label>
-                            <input type="range" class="form-range" min="1" max="16"  value="1" id="new-server-ram" name="new-server-ram">
+                            <input type="range" class="form-range" min="1" max="16"  value="<?php echo $server->getRam(); ?>" id="new-server-ram" name="ram">
                         </div>
 
                         <div>
